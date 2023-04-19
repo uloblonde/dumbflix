@@ -84,7 +84,6 @@ const tvss = [
   export default function List(){
     return(
         <>
-            <Addfilm/>
             <Datafilm gettv={tvs} gettvv={tvss}/>
         </>
     )

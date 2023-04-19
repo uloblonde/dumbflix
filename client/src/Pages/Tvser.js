@@ -1,5 +1,6 @@
 import Tv from "../Components/Tv"
 import Tvseries from "../Components/Tvseries"
+import Datafilm from "../AdminComponents/Datafilm";
 
 
 const tvs = [
@@ -83,7 +84,7 @@ const tvss = [
     return(
         <>
             <Tv/>
-            <Tvseries coba={tvs} cobaa={tvss}/>
+            <Datafilm gettv={tvs} gettvv={tvss}/>
         </>
     )
   }

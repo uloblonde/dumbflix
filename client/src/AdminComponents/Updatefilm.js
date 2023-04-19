@@ -4,8 +4,10 @@ import "../CSS/Mainpage.css";
 import { useMutation } from "react-query";
 import { API } from "../config/Api";
 
-export default function Addformfilm() {
+export default function Updatefilm() {
+  
   const [cat, setCat] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
   const [form, setForm] = useState({
     title: "",
     thumbnailFilm: "",
@@ -14,26 +16,47 @@ export default function Addformfilm() {
     categoryId: "",
   });
 
-  const getCategories = async () => {
-    try {
-      const response = await API.get('/caricat')
-      setCat(response.data)
-      console.log("data asu : ", response.data)
-    } catch (error) {
-      console.log(error)
-    }
+  async function getDataFilm(){
+    const responseFilm = await API.get('/film' + Id)
+    const responseCat = await API.get('/caricat')
+    
+    const newCategoryId = responseProduct.data.data?.category?.map((item) => {
+      return item.id;
+    });
+
+   
+
+    setForm({
+      ...form,
+      title: responseFilm.data.data,
+      year: responseFilm.data.data,
+      description: responseFilm.data.data,
+      categoryId: newCategoryId
+    })
+    setIsLoading(false)
+    
   }
 
+  useEffect(()=>{
+    getDataFilm()
+  },[])
+
+ 
   const handleOnChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.type === "file" ? e.target.files : e.target.value,
+      [e.target.name]:
+        e.target.type === 'file' ? e.target.files : e.target.value,
     });
-    if (e.target.type === "file") {
+  
+    // Create image url for preview
+    if (e.target.type === 'file') {
       let url = URL.createObjectURL(e.target.files[0]);
       console.log(url)
     }
   };
+
+
   const handleOnSubmit = useMutation(async (e) => {
     try {
       e.preventDefault();
@@ -50,11 +73,14 @@ export default function Addformfilm() {
       formData.set("description", form.description);
       formData.set("categoryId", Number(form.categoryId));
 
-      const response = await API.post("/buatfilm", formData, config);
-      console.log("add film success : ", response);
+      const response = await API.patch(
+      '/film/' + id,
+      formData,
+      config
+    );
+    console.log(response.data)
     } catch (error) {
-      console.log("add film failed : ", error);
-      console.log(form);
+      console.log("Update film failed : ", error);
     }
   });
 
@@ -67,7 +93,7 @@ export default function Addformfilm() {
       <section id="project-form">
         <div class="container">
           <h2 class=" mb-2 pt-5 text-light" style={{ marginLeft: "140px" }}>
-            Add Film
+            Update Film
           </h2>
           <form method="post" class="w-75 mx-auto" onSubmit={(e) => handleOnSubmit.mutate(e)}>
             <input type="text" class="d-none" name="id" />

@@ -57,7 +57,7 @@ const Profile = (props) => {
             <img className="position-absolute " style={{ bottom: "90px", left: "17px", width: "20px" }} src={polygon} />
             <li>
               <div className=" d-flex  ms-3 mt-2">
-                <Link className="text-decoration-none" to={"/Adminlist"}>
+                <Link className="text-decoration-none" to={"/Listfilm"}>
                   <img src={filmlogo} style={{ width: "25px" }} />
                   <a class="text-light text-decoration-none ps-2" href="#">
                     Film
@@ -68,8 +68,8 @@ const Profile = (props) => {
             <div className="bg-secondary w-100 mt-2" style={{ padding: "1px" }}></div>
             <li>
               <div className=" d-flex  ms-3 mt-2">
-                <img onClick={localStorage.removeItem("token")}   src={iclogout} style={{ width: "25px" }} />
-                <a class="text-light text-decoration-none ps-2" href="">
+                <img onClick={logout}   src={iclogout} style={{ width: "25px" ,cursor:"pointer"}} />
+                <a onClick={logout}  class="text-light text-decoration-none ps-2" href="">
                   Logout
                 </a>
               </div>
@@ -119,7 +119,7 @@ const Profile = (props) => {
 };
 
 function Navbar(props) {
-  const [setState] = useContext(UserContext);
+  const [state] = useContext(UserContext);
 
   const width = {
     width: "100%",
@@ -130,7 +130,7 @@ function Navbar(props) {
       <div className="container">
         <div className="d-flex justify-content-between wrap-navbar" style={width}>
           <div className="navbar-nav">
-            {setState.user.role == "admin" ? (
+            {state.user.role == "admin" ? (
               <div className="nav-logo mt-2">
                 <Link to="/">
                   <img src={logo} />
@@ -154,7 +154,7 @@ function Navbar(props) {
               </div>
             )}
           </div>
-          {setState.user.role == "admin" ?(
+          {state.user.role == "admin" ?(
             <div>
 
             </div>
@@ -165,7 +165,7 @@ function Navbar(props) {
             </Link>
           </div>
           )}
-          <div className="nav-buttton d-flex justify-content-between">{setState.isLogin ? <Profile /> : <Inilogin loginlagi={props.inivalues} />}</div>
+          <div className="nav-buttton d-flex justify-content-between">{state.isLogin ? <Profile /> : <Inilogin loginlagi={props.inivalues} />}</div>
         </div>
       </div>
     </div>

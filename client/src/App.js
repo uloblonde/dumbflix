@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./Components/Navbar";
-import {  Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Movies from "./Pages/Movies";
 import Home from "./Pages/Home";
 import Tvser from "./Pages/Tvser";
@@ -15,6 +15,8 @@ import { PrivateRouteAdmin, PrivateRouteLogin, PrivateRouteUser } from "./Compon
 import { UserContext } from "./context/userContext";
 import Addfilm from "./AdminComponents/Addfilm";
 import List from "./AdminComponents/List";
+import Listfilm from "./AdminComponents/Listfilm";
+import Updatefilm from "./AdminComponents/Updatefilm";
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
@@ -32,7 +34,7 @@ const App = () => {
         type: "USER_SUCCESS",
         payload,
       });
-      console.log(response)
+      console.log(response);
       setIsLoading(false);
     } catch (error) {
       console.log("check user failed : ", error);
@@ -61,21 +63,33 @@ const App = () => {
   }, [isLoading]);
   return isLoading ? null : (
     <React.Fragment>
-      {/* <Navbaradmin /> */}
       <Navbar login={isLogin} value={setLogin} inivalues={setLogin} />
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/TVseries" element={<Tvser />} />
         <Route exact path="/Mvs" element={<Movies />} />
-        <Route exact path="/Pay" element={<Uplans />} />
-        <Route exact path="/Profile" element={<Profile />} />
-        <Route exact path="/Adminform" element={<Addformfilm />} />
-        <Route exact path="/Admintable" element={<Table />} />
-        <Route exact path="/Adminlist" element={< List/>} />
-        <Route exact path="/Detail/:id" element={<Moviesdetail />} />
+        <Route element={<PrivateRouteLogin />}>
+          <Route element={<PrivateRouteUser />}>
+            <Route exact path="/TVseries" element={<Tvser />} />
+            <Route exact path="/Mvs" element={<Movies />} />
+            <Route exact path="/Pay" element={<Uplans />} />
+            <Route exact path="/Profile" element={<Profile />} />
+            <Route exact path="/Detail/:id" element={<Moviesdetail />} />
+          </Route>
+          
+
+          <Route element={<PrivateRouteAdmin />}>
+            <Route exact path="/Detail/:id" element={<Moviesdetail />} />
+            <Route exact path="/Adminform" element={<Addformfilm />} />
+            <Route exact path="/Admintable" element={<Table />} />
+            <Route exact path="/Adminlist" element={<List />} />
+            <Route exact path="/Listfilm" element={<Listfilm />} />
+            <Route exact path="/Updatefilm" element={<Updatefilm />} />
+          </Route>
+        </Route>
       </Routes>
     </React.Fragment>
   );
-}
+};
 
 export default App;

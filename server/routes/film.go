@@ -14,7 +14,7 @@ func FilmRoute(e *echo.Group) {
 	h := handlers.HandlersFilm(filmRepo)
 
 	e.GET("/CariFilm", h.CariFilm)
-	e.GET("/film/:id", middleware.Auth(h.DapatFilm))
+	e.GET("/film/:id", h.DapatFilm)
 	e.POST("/buatfilm", middleware.UploadFile(h.MembuatFilm))
 	e.PATCH("/film/:id", middleware.Auth(middleware.UploadFile(h.UpdateFilm)))
 	e.DELETE("/film/:id", middleware.Auth(h.HapusFilm))

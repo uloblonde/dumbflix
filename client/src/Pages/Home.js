@@ -2,8 +2,9 @@
 import Addfilm from "../AdminComponents/Addfilm";
 import Mainpage from "../Components/Mainpage";
 import Tvmovies from "../Components/Tvmovies";
+import Datafilm from "../AdminComponents/Datafilm";
 
-const tv = [
+const tvs = [
   {
     id: 1,
     image: "card1",
@@ -41,7 +42,7 @@ const tv = [
     tahun: "2019",
   },
 ];
-const Mvs = [
+const tvss = [
   {
     id: 1,
     image: "card7",
@@ -84,7 +85,7 @@ export default function Home() {
   return (
     <>
       <Mainpage/>
-      <Tvmovies tv={tv} mvs={Mvs} />
+      <Datafilm gettv={tvs} gettvv={tvss}/>
     </>
   );
 }

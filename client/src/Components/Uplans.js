@@ -24,10 +24,8 @@ export default function Uplans() {
                 autoFocus
               />
           <div className="d-flex flex-column align-items-center">
-          <button type="submit" className="w-25 btn btn-light text-center ms-2 mt-2 fw-bold border-0 bg-white text-danger p-2 ">
-            Attach proof of transfer
-          </button>
-          <button type="submit" className="w-25 btn text-center ms-2 fw-bold border-0  text-light p-2" style={{backgroundColor:"red" ,marginTop:"6Input your account number0px"}}>
+
+          <button type="submit" className="w-25 btn text-center ms-2 fw-bold border-0 mt-4  text-light p-2" style={{backgroundColor:"red" ,marginTop:"6Input your account number0px"}}>
             Kirim
           </button>
           </div>

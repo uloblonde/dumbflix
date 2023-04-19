@@ -2,6 +2,8 @@
 import { useParams } from "react-router-dom";
 import React from "react";
 import ReactPlayer from "react-player";
+import { useQuery } from "react-query";
+import { API } from "../config/Api";
 
 function Moviesdetail() {
   const dataDetail = [
@@ -150,44 +152,50 @@ function Moviesdetail() {
       carrs1: "https://www.youtube.com/watch?v=r7-M90PNk5E",
     },
   ];
-  const { id } = useParams();
-  const datas = dataDetail.find((item) => item.id === parseInt(id));
+  const { id } = useParams()
+
+  let { data: film } = useQuery('filmDetailChache', async () => {
+    const response = await API.get(`/film/${id}`)
+    console.log("response :",response)
+    return response.data.data
+  })  
+  const data = dataDetail.find((item) => item.id === parseInt(id));
 
   console.log(id);
 
   return (
     <div className="position-relative ">
       <div style={{ paddingLeft: "350px", backgroundColor:"rgb(30, 30, 30)" }}>
-        <ReactPlayer className="z-2" url={datas.image} />
+        <ReactPlayer className="z-2" url={data.image} />
       </div>
       <div className="bg-black h-100 pt-5 pb-5">
         <div className="container">
           <div className="d-flex justify-content-between">
             <div className="d-flex" style={{ height: "210px" }}>
-              <img src={require(`../img/card/${datas.card}.png`)} />
+              <img src={film?.thumbnailFilm} />
               <div className="ms-5 w-50">
-                <h2 className="text-light">{datas.title}</h2>
+                <h2 className="text-light">{film?.title}</h2>
                 <div className="d-flex pb-2 align-items-center">
-                  <p className="pmain text-light pt-3">{datas.year}</p>
+                  <p className="pmain text-light pt-3">{film?.year}</p>
                   <button type="button" class=" pmain btn btn-outline-light ms-4">
-                    {datas.btn}
+                    {film?.category.name}
                   </button>
                 </div>
-                <p style={{ textAlign: "justify", color: "white", fontSize: "11pt" }}>{datas.parap}</p>
+                <p style={{ textAlign: "justify", color: "white", fontSize: "11pt" }}>{film?.description}</p>
               </div>
             </div>
             <div style={{ height: "210px" }}>
               <div id="carouselExampleControlsNoTouching" className="carousel slide w-100" data-bs-touch="false" data-bs-interval="false" style={{ height: "210px" }}>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
-                    <ReactPlayer url={datas.carrs} class="d-block" alt="..." width={370} height={250} />
+                    <ReactPlayer url={data.carrs} class="d-block" alt="..." width={370} height={250} />
                   </div>
                   458422456
                   <div class="carousel-item">
-                    <ReactPlayer url={datas.carrs1} class="d-block" alt="..." width={370} height={250} />
+                    <ReactPlayer url={data.carrs1} class="d-block" alt="..." width={370} height={250} />
                   </div>
                   <div class="carousel-item ">
-                    <ReactPlayer url={datas.carrs} class="d-block" alt="..." width={370} height={250}  />
+                    <ReactPlayer url={data.carrs} class="d-block" alt="..." width={370} height={250}  />
                   </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">

@@ -1,8 +1,10 @@
 import Inimovie from "../Components/Inimovie";
-import Movieser from "../Components/Movieser";
+import Movieser from "../AdminComponents/Movieser";
+import Moviesdetail from "../Components/Moviesdetail";
+import Datafilm from "../AdminComponents/Datafilm";
 
 
-const mvseries = [
+const tvs= [
   {
     id: 1,
     image: "card1",
@@ -40,7 +42,7 @@ const mvseries = [
     tahun: "2019",
   },
 ];
-const mvseriess = [
+const tvss = [
   {
     id: 1,
     image: "card7",
@@ -84,7 +86,7 @@ export default function Movies(){
       <>
       
        <Inimovie/>
-       <Movieser mvs = {mvseries} mvss={mvseriess}/>
+       <Datafilm gettv={tvs} gettvv={tvss}/>
        </>
     );
 }
