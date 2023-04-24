@@ -1,11 +1,10 @@
-
 import { useParams } from "react-router-dom";
-import React, { useState } from "react";
+import React,{useState,useEffect} from "react";
 import ReactPlayer from "react-player";
 import { useQuery } from "react-query";
-import { API } from "../config/Api";
+import { API } from "../../config/Api";
 
-function Moviesdetail() {
+function Detafilm() {
   const dataDetail = [
     {
       id: 1,
@@ -128,7 +127,7 @@ function Moviesdetail() {
       carrs1: "https://www.youtube.com/watch?v=r7-M90PNk5E",
     },
     {
-      id:11,
+      id: 11,
       image: "https://www.youtube.com/watch?v=5xH0HfJHsaY",
       card: "card11",
       title: "Parasite",
@@ -152,28 +151,31 @@ function Moviesdetail() {
       carrs1: "https://www.youtube.com/watch?v=r7-M90PNk5E",
     },
   ];
-  const { id } = useParams()
+  const { id } = useParams();
   const [epis,setEpis] = useState([])
 
-  let { data: film } = useQuery('filmDetailChache', async () => {
-    const response = await API.get(`/film/${id}`)
-    console.log("response :",response)
-    return response.data.data
-  })
+  let { data: film } = useQuery("filmDetailChache", async () => {
+    const response = await API.get(`/film/${id}`);
+    console.log("response :", response.data.data);
+    return response.data.data;
+  });
   let { data: epi } = useQuery("epiChache", async () => {
     const response = await API.get(`/film/${id}/episode`);
     console.log("console episode: ", response);
     setEpis(response.data.data)
     return response.data.data;
   });
-    
+
+  
+
   const data = dataDetail.find((item) => item.id === parseInt(id));
 
   console.log(id);
+  
 
   return (
     <div className="position-relative ">
-      <div style={{ paddingLeft: "350px", backgroundColor:"rgb(30, 30, 30)" }}>
+      <div style={{ paddingLeft: "350px", backgroundColor: "rgb(30, 30, 30)" }}>
       {epi && (
         <ReactPlayer className="z-2" url={epi[0].linkFilm}  />
       )}
@@ -194,27 +196,20 @@ function Moviesdetail() {
                 <p style={{ textAlign: "justify", color: "white", fontSize: "11pt" }}>{film?.description}</p>
               </div>
             </div>
-            <div style={{ height: "210px" }}>
-              <div id="carouselExampleControlsNoTouching" className="carousel slide w-100" data-bs-touch="false" data-bs-interval="false" style={{ height: "210px" }}>
-                <div class="carousel-inner">
-                {epi?.map((item,i)=>(
-
-                  <div 
-                    key={i}
-                   class={i === 0 ?"carousel-item active" : "carousel-item"}>
-                    <ReactPlayer url={item.linkFilm} class="d-block" alt="..." width={370} height={250} />
-                  </div>
-                ))}
-                 
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControlsNoTouching" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
+            <div style={{ height: "210px" }} className="mb-5">
+              <div class="dropdown">
+                <a class="btn btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                  Episode
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  {epis&&epis.map((item,index)=>( 
+                    <li>
+                    <a key={index} value={item.filmId} class="dropdown-item" href={item.linkFilm}>
+                      {item.title}
+                    </a>
+                  </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -223,4 +218,4 @@ function Moviesdetail() {
     </div>
   );
 }
-export default Moviesdetail;
+export default Detafilm;

@@ -31,6 +31,27 @@ func (h *handlerEpi) CariEpi(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, films)
 }
+func (h *handlerEpi) CariEpiByFilm(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	Episode, err := h.EpiRepository.CariEpiByFilm(id)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+
+	return c.JSON(http.StatusOK, dto.SuccesResult{Code: http.StatusOK, Data: Episode})
+}
+
+func (h *handlerEpi) DapatEpiByFilm(c echo.Context) error {
+	id, _ := strconv.Atoi(c.Param("id"))
+	ide, _ := strconv.Atoi(c.Param("ide"))
+
+	Episode, err := h.EpiRepository.DapatEpiByFilm(id, ide)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, dto.ErrorResult{Code: http.StatusBadRequest, Message: err.Error()})
+	}
+	Episode.ThumbnailFilm = path_file + Episode.ThumbnailFilm
+	return c.JSON(http.StatusOK, dto.SuccesResult{Code: http.StatusOK, Data: Episode})
+}
 
 func (h *handlerEpi) DapatEpi(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))

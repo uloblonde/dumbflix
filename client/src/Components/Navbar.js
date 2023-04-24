@@ -50,7 +50,7 @@ const Profile = (props) => {
   return (
     <div>
       {/* Si Admin */}
-      {state.user.role == "admin" ? (
+      {state && state.user.role == "admin" ? (
         <div className="dropdown position-relative">
           <img type="button" className="w-75 btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" src={profile} />
           <ul class="dropdown-menu bg-black">
@@ -161,11 +161,11 @@ function Navbar(props) {
           ):(
           <div className="nav-logo">
             <Link to="/">
-              <img src={logo} />
+              <img className="me-5 pe-4" src={logo} />
             </Link>
           </div>
           )}
-          <div className="nav-buttton d-flex justify-content-between">{state.isLogin ? <Profile /> : <Inilogin loginlagi={props.inivalues} />}</div>
+          <div className="nav-buttton d-flex justify-content-between ">{state.isLogin ? <Profile /> : <Inilogin loginlagi={props.inivalues} />}</div>
         </div>
       </div>
     </div>

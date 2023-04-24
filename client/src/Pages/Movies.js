@@ -1,7 +1,7 @@
 import Inimovie from "../Components/Inimovie";
-import Movieser from "../AdminComponents/Movieser";
+import Movieser from "./Cardview/Movieser";
 import Moviesdetail from "../Components/Moviesdetail";
-import Datafilm from "../AdminComponents/Datafilm";
+import Datafilm from "./Cardview/Datafilm";
 
 
 const tvs= [
@@ -86,7 +86,7 @@ export default function Movies(){
       <>
       
        <Inimovie/>
-       <Datafilm gettv={tvs} gettvv={tvss}/>
+       <Movieser/>
        </>
     );
 }

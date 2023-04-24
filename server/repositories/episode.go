@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"backendtask/models"
+	"fmt"
 
 	"gorm.io/gorm"
 )
@@ -12,7 +13,10 @@ type EpiRepository interface {
 	MembuatEpi(cat models.Episode) (models.Episode, error)        //inisialisasi membuat Episode
 	UpdateEpi(cat models.Episode, Id int) (models.Episode, error) //Update Episode
 	HapusEpi(cat models.Episode, Id int) (models.Episode, error)  //Hapuse User
-	// GetCatId(Id int) (models.Category, error)
+	CariEpiByFilm(Id int) ([]models.Episode, error)
+	DapatEpiByFilm(Id int, IDE int) (models.Episode, error)
+
+	// DapatCatId(Id int) (models.Category, error)
 }
 type epiRepo struct {
 	db *gorm.DB //ngepointer si gorm db
@@ -20,6 +24,20 @@ type epiRepo struct {
 
 func RepositoryEpi(db *gorm.DB) *epiRepo { //function Repository mengambil parameter berupa pointer ke gorm dan mengembalikan pointer ke repo
 	return &epiRepo{db}
+}
+func (r *epiRepo) CariEpiByFilm(Id int) ([]models.Episode, error) {
+	var Episode []models.Episode
+	err := r.db.Preload("Film.Category").Find(&Episode, "film_id = ?", Id).Error
+
+	fmt.Println(Id)
+	return Episode, err
+}
+
+func (r *epiRepo) DapatEpiByFilm(Id int, IDE int) (models.Episode, error) {
+	var Episode models.Episode
+	err := r.db.Preload("Film").First(&Episode, "film_id = ? AND id = ?", Id, IDE).Error
+
+	return Episode, err
 }
 
 func (r *epiRepo) CariEpi() ([]models.Episode, error) {

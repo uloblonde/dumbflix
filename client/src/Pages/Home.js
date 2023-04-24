@@ -1,8 +1,8 @@
 
-import Addfilm from "../AdminComponents/Addfilm";
+import Addfilm from "../AdminComponents/Film/Addfilm";
 import Mainpage from "../Components/Mainpage";
 import Tvmovies from "../Components/Tvmovies";
-import Datafilm from "../AdminComponents/Datafilm";
+import Datafilm from "./Cardview/Datafilm";
 
 const tvs = [
   {

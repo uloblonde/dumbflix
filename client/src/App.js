@@ -8,15 +8,17 @@ import React, { useState, useContext, useEffect } from "react";
 import Profile from "./Components/Profile";
 import Uplans from "./Components/Uplans";
 import Moviesdetail from "./Components/Moviesdetail";
-import Addformfilm from "./AdminComponents/Addformfilm";
+import Addformfilm from "./AdminComponents/Film/Addformfilm";
 import Table from "./AdminComponents/Table";
 import { API, setAuthToken } from "../src/config/Api";
 import { PrivateRouteAdmin, PrivateRouteLogin, PrivateRouteUser } from "./Components/privateroute/PrivateRoute";
 import { UserContext } from "./context/userContext";
-import Addfilm from "./AdminComponents/Addfilm";
+import Addfilm from "./AdminComponents/Film/Addfilm";
 import List from "./AdminComponents/List";
 import Listfilm from "./AdminComponents/Listfilm";
-import Updatefilm from "./AdminComponents/Updatefilm";
+import Updatefilm from "./AdminComponents/Film/Updatefilm";
+import Addformepi from "./AdminComponents/Episode/Addformepi";
+import Detafilm from "./AdminComponents/Episode/Detailfilm";
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
@@ -81,10 +83,11 @@ const App = () => {
           <Route element={<PrivateRouteAdmin />}>
             <Route exact path="/Detail/:id" element={<Moviesdetail />} />
             <Route exact path="/Adminform" element={<Addformfilm />} />
+            <Route exact path="/Adminformepi" element={<Addformepi />} />
             <Route exact path="/Admintable" element={<Table />} />
-            <Route exact path="/Adminlist" element={<List />} />
             <Route exact path="/Listfilm" element={<Listfilm />} />
-            <Route exact path="/Updatefilm" element={<Updatefilm />} />
+            <Route exact path="/Details/:id" element={<Detafilm />} />
+            <Route exact path="/Updatefilm/:id" element={<Updatefilm />} />
           </Route>
         </Route>
       </Routes>

@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import icclip from "../img/icon/cliplogo.png";
-import "../CSS/Mainpage.css";
+import { useNavigate } from 'react-router-dom';
+import icclip from "../../img/icon/cliplogo.png";
+import "../../CSS/Mainpage.css";
 import { useMutation } from "react-query";
-import { API } from "../config/Api";
+import { API } from "../../config/Api";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 
 export default function Addformfilm() {
+  const navigate = useNavigate();
+  const MySwal = withReactContent(Swal);
   const [cat, setCat] = useState([]);
   const [form, setForm] = useState({
     title: "",
@@ -52,9 +57,21 @@ export default function Addformfilm() {
 
       const response = await API.post("/buatfilm", formData, config);
       console.log("add film success : ", response);
+      MySwal.fire({
+        title: <strong>Add Film Success</strong>,
+        html: <i>You clicked the button!</i>,
+        icon: 'success'
+      })
+      navigate('/Listfilm')
+      
     } catch (error) {
       console.log("add film failed : ", error);
       console.log(form);
+
+      MySwal.fire({
+        title: <strong>Sadge</strong>,
+        icon: 'error'
+      })
     }
   });
 

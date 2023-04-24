@@ -1,6 +1,6 @@
 import Tv from "../Components/Tv"
-import Tvseries from "../Components/Tvseries"
-import Datafilm from "../AdminComponents/Datafilm";
+import Tvseries from "./Cardview/Tvseries"
+import Datafilm from "./Cardview/Datafilm";
 
 
 const tvs = [
@@ -84,7 +84,7 @@ const tvss = [
     return(
         <>
             <Tv/>
-            <Datafilm gettv={tvs} gettvv={tvss}/>
+            <Tvseries/>
         </>
     )
   }

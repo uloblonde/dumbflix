@@ -15,6 +15,8 @@ func EpisodeRoute(e *echo.Group) {
 
 	e.GET("/cariepi", h.CariEpi)
 	e.GET("/epi/:id", h.DapatEpi)
+	e.GET("/film/:id/episode", h.CariEpiByFilm)
+	e.GET("/film/:id/episode/:ide", h.DapatEpiByFilm)
 	e.POST("/createepi", middleware.Auth(middleware.UploadFile(h.MembuatEpi)))
 	e.PATCH("/epi/:id", middleware.Auth(middleware.UploadFile(h.UpdateEpi)))
 	e.DELETE("/epi/:id", h.HapusEpi)

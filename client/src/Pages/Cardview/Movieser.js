@@ -1,47 +1,21 @@
 import { Link } from "react-router-dom";
-import { API } from "../config/Api";
-import React, { useState, useEffect } from "react";
+import { API } from "../../config/Api";
 import { useQuery } from "react-query";
 
-const Datafilm = (props) => {
+const Movieser = (props) => {
+  let { data: films } = useQuery("tvmvChache", async () => {
+    const response = await API.get("/CariFilm");
+    return response.data;
+  });
 
-  const [cat, setCat] = useState([]);
-
-  const getCategories = async () => {
-    try {
-      const response = await API.get('/CariFilm')
-      setCat(response.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  useEffect(() => {
-    getCategories()
-  }, [])
-
+  const getMv = films?.filter((item) => item.categoryId === 2);
 
   return (
     <>
-      
       <div className="wrap bg-black">
-        
-        
-        <h2 className="fs-4 text-light ms-4">TV Series</h2>
-        <div className="global d-flex justify-content-evenly rounded">
-          {cat.slice(0, 6).map((tv) => (
-            <Link className="text-decoration-none" to={`/Detail/${tv.id}`}>
-              <div className="card bg-black">
-                <img src={tv.thumbnailFilm} className="" />
-                <h4 className="text-light pt-2">{tv.title}</h4>
-                <p className="text-light pt-2">{tv.year}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-
         <h2 className="fs-4 text-light ms-4">Movies</h2>
         <div className="global d-flex justify-content-evenly rounded">
-          {cat.slice(7, 14).map((movie) => (
+          {getMv?.map((movie) => (
             <Link className="text-decoration-none" to={`/Detail/${movie.id}`}>
               <div className="card bg-black">
                 <img src={movie.thumbnailFilm} className="" />
@@ -131,4 +105,4 @@ const Datafilm = (props) => {
 
 // )
 
-export default Datafilm;
+export default Movieser;

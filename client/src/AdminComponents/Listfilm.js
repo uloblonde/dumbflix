@@ -12,7 +12,6 @@ const Listfilm = (props) => {
     try {
       const response = await API.get("/caricat");
       setCategories(response.data);
-      console.log("KONTOL : ", response.data);
     } catch (error) {
       console.log(error);
     }
@@ -54,6 +53,7 @@ const Listfilm = (props) => {
   return (
     <>
       <div className="bg-black py-4">
+        <style>{'body { background-color: black; }'}</style>
         <div className="ms-4 me-5  d-flex justify-content-between">
           <div className="d-flex justify-content-evenly align-items-center" style={{ width: "275px" }}>
             <h2 className="text-light fs-4" style={{ width: "200px" }}>
@@ -71,7 +71,7 @@ const Listfilm = (props) => {
                 Add Film
               </button>
             </Link>
-            <Link className="text-decoration-none ms-5" to="/Updatefilm">
+            <Link className="text-decoration-none ms-5" to="/Adminformepi">
               <button type="button" className="shadow  btn btn-danger fw-bold w-100 py-2">
                 Add Episode
               </button>
@@ -79,14 +79,14 @@ const Listfilm = (props) => {
           </div>
         </div>
       </div>
-      <div className="wrap bg-black global d-flex justify-content-evenly rounded">
+      <div className="flex-wrap bg-black global d-flex justify-content-evenly">
         {selectedValue === "TV Series" ? (
           <>
             {catTv?.length !== 0 ? (
               <>
                 {catTv?.map((item) => (
                   <div>
-                    <Link className="text-decoration-none" to={`/Detail/${item.id}`}>
+                    <Link className="text-decoration-none" to={`/Details/${item.id}`}>
                       <div className="card bg-black">
                         <img src={item.thumbnailFilm} className="" />
                         <h4 className="text-light pt-2">{item.title}</h4>
@@ -97,9 +97,12 @@ const Listfilm = (props) => {
                       <button onClick={handleDelete} type="buton" className="shadow  btn btn-danger fw-bold  " style={{width:"70px"}} name={item.id} value={item.id}>
                         Delete
                       </button>
-                      <button onClick={handleDelete} type="buton" className="shadow  btn btn-success fw-bold  " style={{width:"70px"}} name={item.id} value={item.id}>
+                      <Link to={`/Updatefilm/${item.id}`}>
+
+                      <button  type="buton" className="shadow  btn btn-success fw-bold  " style={{width:"70px"}} name={item.id} value={item.id}>
                         Update
                       </button>
+                      </Link>
                     </div>
                   </div>
                 ))}
@@ -121,6 +124,14 @@ const Listfilm = (props) => {
                         <p className="text-light pt-2">{item.year}</p>
                       </div>
                     </Link>
+                    <div className="d-flex justify-content-between">
+                      <button onClick={handleDelete} type="buton" className="shadow  btn btn-danger fw-bold  " style={{width:"70px"}} name={item.id} value={item.id}>
+                        Delete
+                      </button>
+                      <button type="buton" className="shadow  btn btn-success fw-bold  " style={{width:"70px"}} name={item.id} value={item.id}>
+                        Update
+                      </button>
+                    </div>
                   </div>
                 ))}
               </>

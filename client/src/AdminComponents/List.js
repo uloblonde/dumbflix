@@ -1,7 +1,7 @@
 
-import Tvseries from "../Components/Tvseries"
-import Addfilm from "./Addfilm";
-import Datafilm from "./Datafilm";
+import Tvseries from "../Pages/Cardview/Tvseries"
+import Addfilm from "./Film/Addfilm";
+import Datafilm from "../Pages/Cardview/Datafilm";
 
 
 const tvs = [
