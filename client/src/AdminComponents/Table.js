@@ -1,6 +1,28 @@
+import { useMutation, useQuery } from "react-query";
+import { API } from "../config/Api";
+import { useState } from "react";
+
 export default function Table() {
+
+    const count = 0
+
+  const {data: transaction} = useQuery('transCache', async () =>{
+    const response = await API.get('/caritrans')
+    return response.data
+  })
+  const Statuspayment = ({ status }) => {
+    switch (status) {
+        case "pending":
+            return <p className='text-warning'>Pending</p>
+        case "success":
+            return <span className='text-success'>Success</span>
+        case "failed":
+            return <span className='text-danger'>Failed</span>
+        default: return
+    }
+}
   return (
-    <div className="bg-black" style={{height:"600px"}}>
+    <div className="bg-black py-2">
       <div className="container">
         <h3 className="text-light pt-5" >Incoming Transaction</h3>
         <div className="pt-4">
@@ -9,73 +31,27 @@ export default function Table() {
           <tr className="text-danger">
             <th scope="col">No</th>
             <th scope="col">Users</th>
-            <th scope="col">Bukti Transfer</th>
             <th scope="col">Remaining Active</th>
             <th scope="col">Status User</th>
             <th scope="col">Status Payment</th>
-            <th scope="col">Action</th>
+
           </tr>
         </thead>
         <tbody>
-          <tr className="table-active">
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>Active</td>
-            <td>Pending</td>
-            <td>@mdo</td>
+          {transaction?.map((item,i)=>(
+          <tr  key={i} className="table-active">
+            <th scope="row">{i + 1}</th>
+            <td>{item.user.fullName}</td>
+            <td>{item.endDate.split("T")[0]}</td>
+            <td>{item?.user.subscribe ? "Subscribe" : "not subscribed"}</td>
+            <td>{<Statuspayment status={item.status} />}</td>
           </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>Active</td>
-            <td>Pending</td>
-            <td>@fat</td>
-          </tr>
-          <tr className="table-active">
-            <th scope="row">3</th>
-            <td>Larry the Bird</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>Not Active</td>
-            <td>Aprove</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">4</th>
-            <td>Yakin</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>Active</td>
-            <td>Aprove</td>
-            <td>@twitter</td>
-          </tr>
-          <tr className="table-active">
-            <th scope="row">5</th>
-            <td>Sutikno</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>Active</td>
-            <td>Aprove</td>
-            <td>@twitter</td>
-          </tr>
-          <tr>
-            <th scope="row">6</th>
-            <td>Drajat</td>
-            <td>@twitter</td>
-            <td>@twitter</td>
-            <td>Active</td>
-            <td>Aprove</td>
-            <td>@twitter</td>
-          </tr>
-          
+          ))}
         </tbody>
       </table>
       </div>
       </div>
     </div>
   );
+  
 }

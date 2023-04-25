@@ -10,7 +10,7 @@ type TransRepository interface {
 	CariTrans() ([]models.Transaction, error)
 	MembuatTrans(Trans models.Transaction) (models.Transaction, error)
 	DapatTrans(Id int) (models.Transaction, error)
-	UpdateTrans(Trans models.Transaction, Id int) (models.Transaction, error)
+	UpdateTrans(status string, orderId int) (models.Transaction, error)
 	HapusTrans(Trans models.Transaction, Id int) (models.Transaction, error)
 }
 type transRepo struct {
@@ -34,9 +34,20 @@ func (r *transRepo) MembuatTrans(trans models.Transaction) (models.Transaction, 
 	err := r.db.Preload("User").Create(&trans).Error
 	return trans, err
 }
-func (r *transRepo) UpdateTrans(trans models.Transaction, Id int) (models.Transaction, error) {
-	err := r.db.Save(&trans).Error
-	return trans, err
+func (r *transRepo) UpdateTrans(status string, orderId int) (models.Transaction, error) {
+	var transaction models.Transaction
+	r.db.Preload("User").First(&transaction, orderId)
+
+	if status != transaction.Status && status == "success" {
+		var user models.User
+		r.db.First(&user, transaction.UserId)
+		user.Subscribe = true
+		r.db.Save(&user)
+	}
+
+	transaction.Status = status
+	err := r.db.Save(&transaction).Error
+	return transaction, err
 }
 
 func (r *transRepo) HapusTrans(trans models.Transaction, Id int) (models.Transaction, error) {

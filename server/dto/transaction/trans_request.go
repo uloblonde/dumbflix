@@ -15,3 +15,6 @@ type UpdateTransRequest struct {
 	Attache   string `json:"attache" gorm:"type:varchar(255)"`
 	Status    string `json:"status" gorm:"type:varchar(255)"`
 }
+type TransactionRequest struct {
+	Price int `json:"price"`
+}

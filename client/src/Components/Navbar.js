@@ -50,17 +50,27 @@ const Profile = (props) => {
   return (
     <div>
       {/* Si Admin */}
-      {state && state.user.role == "admin" ? (
+      {state.user.role == "admin" ? (
         <div className="dropdown position-relative">
           <img type="button" className="w-75 btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" src={profile} />
           <ul class="dropdown-menu bg-black">
-            <img className="position-absolute " style={{ bottom: "90px", left: "17px", width: "20px" }} src={polygon} />
+            <img className="position-absolute " style={{ bottom: "120px", left: "17px", width: "20px" }} src={polygon} />
             <li>
               <div className=" d-flex  ms-3 mt-2">
                 <Link className="text-decoration-none" to={"/Listfilm"}>
                   <img src={filmlogo} style={{ width: "25px" }} />
                   <a class="text-light text-decoration-none ps-2" href="#">
                     Film
+                  </a>
+                </Link>
+              </div>
+            </li>
+            <li>
+              <div className=" d-flex  ms-3 mt-2">
+                <Link className="text-decoration-none" to={"/Admintable"}>
+                  <img src={filmlogo} style={{ width: "25px" }} />
+                  <a class="text-light text-decoration-none ps-2" href="#">
+                    Table
                   </a>
                 </Link>
               </div>

@@ -16,6 +16,6 @@ func TransRoute(e *echo.Group) {
 	e.GET("/caritrans", middleware.Auth(h.CariTrans))
 	e.GET("/transaction/:id", middleware.Auth(h.DapatTrans))
 	e.POST("/membuattrans", middleware.Auth(h.MembuatTrans))
-	e.PATCH("/transaction/:id", middleware.Auth(h.UpdateTrans))
+	e.POST("/notification", h.Notification)
 	e.DELETE("/transaction/:id", middleware.Auth(h.HapusTrans))
 }

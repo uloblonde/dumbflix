@@ -14,8 +14,9 @@ const Datafilm = (props) => {
  
   const getTv = films?.filter((item)=> item.categoryId === 1)
   const getMv = films?.filter((item)=> item.categoryId === 2)
+  console.log(getTv)
 
-
+  
   return (
     <>
       <div className="wrap bg-black">  
